@@ -8,37 +8,24 @@
 </head>
 
 <body>
-    <img src="Screenshot (2).png" alt="" style="width: 500px; height: 300px; object-fit: cover;"> <br>
-    <button id="download-button">Download Image</button>
-
+    <button id="downloadButton">Download Image</button>
 </body>
 <script>
-    const downloadButton = document.getElementById('download-button');
+  document.getElementById("downloadButton").addEventListener("click", function() {
+    // Create a new anchor element to trigger the download
+    var downloadLink = document.createElement("a");
+    downloadLink.href = "Screenshot (2).png"; // Replace with your image URL
+    downloadLink.download = "image.jpg"; // Rename the downloaded file if needed
 
-    downloadButton.addEventListener('click', async () => {
-        try {
-            const response = await fetch('Screenshot (2).png');
-            const blob = await response.blob();
+    // Trigger the click event to initiate the download
+    downloadLink.click();
 
-            // Create a new Blob URL for the blob object.
-            const objectUrl = URL.createObjectURL(blob);
-
-            // Create a new anchor element and set its href and download attributes.
-            const link = document.createElement('a');
-            link.href = objectUrl;
-            link.download = 'my-image.jpg';
-
-            // Append the anchor element to the document body and click it.
-            document.body.appendChild(link);
-            link.click();
-
-            // Revoke the object URL, because it is no longer needed.
-            URL.revokeObjectURL(objectUrl);
-        } catch (error) {
-            // Display an error message if the image cannot be downloaded.
-            alert('Error downloading image: ' + error.message);
-        }
+    // Handle the download error
+    downloadLink.addEventListener("error", function() {
+        alert("Error downloading the image. Please try again later.");
     });
+});
+
 
 </script>
 
